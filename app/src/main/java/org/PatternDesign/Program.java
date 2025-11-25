@@ -5,6 +5,8 @@ import org.PatternDesign.Adapter.ITraget;
 import org.PatternDesign.Factory.DataAnalyticsEngine;
 import org.PatternDesign.Factory.DatabaseFactory;
 import org.PatternDesign.Factory.DatabaseType;
+import org.PatternDesign.Observer.ConcreteObserver;
+import org.PatternDesign.Observer.Subject;
 
 public class Program {
 
@@ -17,6 +19,8 @@ public class Program {
                         employeesAdapterDemo();
                         Thread.sleep(2000);
                         System.out.println();
+
+                        observingThings();
                 } catch (InterruptedException e) {
                         e.printStackTrace();
                 }
@@ -42,5 +46,34 @@ public class Program {
                 System.out.println("HR system passes employee string array to Adapter\n");
                 ITraget traget = new EmployeeAdapter();
                 traget.ProcessCompanySalary(employeesArray);
+        }
+
+        static void observingThings() {
+                Subject RedMI = new Subject("Red MI Mobile", 10000, "Out Of Stock");
+
+                ConcreteObserver user1 = new ConcreteObserver("Anurag");
+                user1.AddSubscriber(RedMI);
+
+                ConcreteObserver user2 = new ConcreteObserver("Pranaya");
+                user2.AddSubscriber(RedMI);
+
+                ConcreteObserver user3 = new ConcreteObserver("Priyanka");
+                user3.AddSubscriber(RedMI);
+
+                try {
+                        Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                        e.printStackTrace();
+                }
+
+                user3.RemoveSubscriber(RedMI);
+
+                try {
+                        Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                        e.printStackTrace();
+                }
+
+                RedMI.setAvailability("Available");
         }
 }
